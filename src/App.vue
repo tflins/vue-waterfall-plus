@@ -25,8 +25,8 @@ export default {
 
   methods: {
     getDataList() {
-      axios.get('api/shibes?count=20&urls=true&httpsUrls=false').then(res => {
-        this.dataList = res.data
+      axios.get('api/shibes?count=30&urls=true&httpsUrls=false').then(res => {
+        this.dataList = res.data.map(v => ({ url: v }))
       })
     }
   }
