@@ -13,6 +13,7 @@
       <img
         :src="v"
         alt=""
+        :ref="`img${i}`"
       >
     </div>
   </div>
@@ -42,25 +43,29 @@ export default {
   },
 
   mounted() {
-    console.log('ddd')
     this.render()
   },
 
   methods: {
     render() {
       this.columnData = []
-      this.$nextTick(() => {
-        console.log('ddd')
-        const $waterfallPlus = this.$refs.waterfallPlus
-        this.dataList.forEach((v, i) => {
-          console.log('ddd')
-          // if (i < this.col) {
-          //   this.columnData.push()
-          // }
-          console.log($waterfallPlus.getElementsByClassName('pic')[i])
-          this.columnData.push(i)
+      setTimeout(() => {
+        this.$nextTick(() => {
+          const $waterfallPlus = this.$refs.waterfallPlus
+          this.dataList.forEach((v, i) => {
+            const $item = $waterfallPlus.getElementsByClassName('pic')[i]
+            const $img = this.$refs[`img${i}`][0]
+            // console.log($img)
+            $img.addEventListener('load', e => {
+              console.log(e.target)
+              console.log($item.offsetHeight)
+            })
+            if (i < this.col) {
+              this.columnData.push($item.offsetHeight)
+            }
+          })
         })
-      })
+      }, 1000)
     }
   }
 }

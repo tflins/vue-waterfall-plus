@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <waterfall-plus :dataList="dataList"></waterfall-plus>
+    <waterfall-plus v-if="dataList.length" :dataList="dataList"></waterfall-plus>
   </div>
 </template>
 
