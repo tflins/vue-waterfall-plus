@@ -1,13 +1,26 @@
 <template>
-  <div></div>
+  <div id="app">
+    <waterfall-plus :dataList="dataList"></waterfall-plus>
+  </div>
 </template>
 
 <script>
+import WaterfallPlus from '@/components/WaterfallPlus'
+
 export default {
   data() {
-    return {}
+    return {
+      dataList: []
+    }
   },
-  components: {}
+
+  components: {
+    WaterfallPlus
+  },
+
+  methods: {
+
+  }
 }
 </script>
 
