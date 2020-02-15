@@ -2,7 +2,7 @@
   <div
     class="waterfall-plus"
     ref="waterfallPlus"
-    :style="{width : col * colWidth + 'px'}"
+    :style="{width : waterfallWidth + 'px'}"
   >
     <div
       class="pic"
@@ -28,65 +28,68 @@ export default {
   },
 
   props: {
+    // 数据列表
     dataList: {
       type: Array,
       required: true
     },
+    // 列数
     col: {
       type: [Number, String],
       default: 4
     },
+    // 每列宽度
     colWidth: {
       type: [Number, String],
       default: '268'
+    },
+    // 间距
+    gap: {
+      type: [Number, String],
+      default: '16'
+    }
+  },
+
+  computed: {
+    // 父容器宽度
+    waterfallWidth() {
+      return this.colWidth * this.col + this.gap * (this.col - 1)
     }
   },
 
   mounted() {
-    this.render()
+    this.preLoadImg(this.dataList)
   },
 
   methods: {
-    // 渲染
-    render() {
-      this.columnData = []
-      this.loaderCount = 0
+    // 预加载图片获取高度
+    preLoadImg(list) {
+      let count = 0
+      
+      list.forEach((item, index) => {
+        const $img = new Image()
+        $img.src = item.url
+
+        $img.onload = $img.onerror = e => {
+          count++
+          if (e.type === 'load') {
+            // 获取图片缩放后的高度
+            list[index].height = ~~($img.height * this.colWidth / $img.width)
+          } else {
+            // 加载失败 给予一个默认高度
+            list[index].height = 50
+          }
+          // 所有图片加载完成
+          if (count === list.length) {
+            console.log(list)
+          }
+        }
+      })
+    },
+    // 渲染布局
+    render(list) {
       this.$nextTick(() => {
-        const $waterfallPlus = this.$refs.waterfallPlus
-
-        this.dataList.forEach((v, i) => {
-          const $img = new Image()
-          $img.src = v.url
-          $img.addEventListener('load', () => {
-            this.loaderCount++
-            this.dataList[i]._height = $img.height * (this.colWidth / $img.width)
-            console.log(this.loaderCount)
-
-            if (this.loaderCount === this.dataList.length) {
-              // 预加载完成 布局
-              for (let j = 0, len = this.dataList.length; j < len; j++) {
-                const $item = $waterfallPlus.getElementsByClassName('pic')[j]
-                if (j < this.col) {
-                  this.columnData.push($item.offsetHeight)
-                }
-                let minHeight = Math.min.apply(null, this.columnData)
-                let minIndex = this.columnData.indexOf(minHeight)
-                // console.log(minIndex)
-                if (j >= this.col) {
-
-                  
-                  $item.style.position = 'absolute'
-                  $item.style.top = minHeight + 'px'
-                  $item.style.left = minIndex * this.colWidth + 'px'
-
-                  console.log(this.dataList[j]._height)
-
-                  this.columnData[minIndex] = this.dataList[j]._height + minHeight
-                }
-              }
-            }
-          })
-        })
+        
       })
     }
   }
@@ -99,7 +102,7 @@ export default {
   margin: 0 auto;
 
   .pic {
-    float: left;
+    position: absolute;
     overflow: hidden;
     border-radius: 4px;
     box-shadow: 0px 4px 8px 0px rgba(14, 34, 57, 0.12);
