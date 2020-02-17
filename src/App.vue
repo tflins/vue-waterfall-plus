@@ -1,11 +1,22 @@
 <template>
   <div id="app">
-    <waterfall-plus v-if="dataList.length" :dataList="dataList"></waterfall-plus>
+
+    <waterfall-plus v-if="dataList.length">
+
+      <waterfall-item
+        v-for="(v, i) in dataList"
+        :key="i"
+        :img-url="v.url"
+      ></waterfall-item>
+
+    </waterfall-plus>
+
   </div>
 </template>
 
 <script>
 import WaterfallPlus from '@/components/WaterfallPlus'
+import WaterfallItem from '@/components/WaterfallPlus/WaterfallItem'
 import axios from 'axios'
 
 export default {
@@ -16,6 +27,7 @@ export default {
   },
 
   components: {
+    WaterfallItem,
     WaterfallPlus
   },
 
