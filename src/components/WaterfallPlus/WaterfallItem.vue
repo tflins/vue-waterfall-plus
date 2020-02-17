@@ -1,7 +1,10 @@
 <template>
-  <div class="waterfall-item">
+  <div
+    class="waterfall-item"
+    :style="{ width: colWidth + 'px' }"
+  >
     <div
-      class="waterfall-item-box"
+      class="waterfall-item-top-box"
       :style="{ width: colWidth + 'px' }"
     >
       <img
@@ -15,6 +18,12 @@
       >
         <slot></slot>
       </div>
+    </div>
+    <div
+      class="waterfall-item-footer"
+      v-if="$slots.footer"
+    >
+      <slot name="footer"></slot>
     </div>
   </div>
 </template>
@@ -33,15 +42,21 @@ export default {
     colWidth() {
       return this.$parent.colWidth
     }
+  },
+
+  beforeCreate() {
+    this.$parent.urlList.push(this.$options.propsData.imgUrl)
   }
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .waterfall-item {
-  float: left;
+  box-shadow: 0px 2px 2px 0px rgba(14, 34, 57, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
 
-  &-box {
+  &-top-box {
     overflow: hidden;
 
     img {

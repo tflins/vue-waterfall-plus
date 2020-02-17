@@ -13,7 +13,8 @@ export default {
   data() {
     return {
       // 每列高度数据
-      columnData: []
+      columnData: [],
+      urlList: []
     }
   },
 
@@ -39,16 +40,33 @@ export default {
     // 父容器宽度
     waterfallWidth() {
       return this.colWidth * this.col + this.gap * (this.col - 1)
-    }
+    },
+
   },
 
   mounted() {
-    // this.preLoadImg(this.dataList)
+
   },
 
   methods: {
     // 预加载图片获取高度
-   
+    preLoadImg(list) {
+      let count = 0
+      let len = list.length
+
+      list.forEach((url) => {
+        const $img = new Image()
+        $img.src = url
+        $img.onload = $img.onerror = e => {
+          if (e.type === 'load') {
+            count++
+            if (count === len) {
+              console.log('加载完了')
+            }
+          }
+        }
+      })
+    }
   }
 }
 </script>

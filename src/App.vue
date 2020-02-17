@@ -7,7 +7,11 @@
         v-for="(v, i) in dataList"
         :key="i"
         :img-url="v.url"
-      ></waterfall-item>
+      >
+      <template v-slot:footer>
+        xxxxxx
+      </template>
+      </waterfall-item>
 
     </waterfall-plus>
 
