@@ -40,12 +40,11 @@ export default {
     // 父容器宽度
     waterfallWidth() {
       return this.colWidth * this.col + this.gap * (this.col - 1)
-    },
-
+    }
   },
 
   mounted() {
-
+    this.preLoadImg(this.urlList)
   },
 
   methods: {
@@ -54,7 +53,7 @@ export default {
       let count = 0
       let len = list.length
 
-      list.forEach((url) => {
+      list.forEach(url => {
         const $img = new Image()
         $img.src = url
         $img.onload = $img.onerror = e => {
@@ -62,10 +61,34 @@ export default {
             count++
             if (count === len) {
               console.log('加载完了')
+              this.renderWaterfall()
             }
           }
         }
       })
+    },
+    // 渲染布局
+    renderWaterfall() {
+      const $waterfallItemList = document.querySelectorAll(
+        '.waterfall-plus .waterfall-item'
+      )
+      console.log($waterfallItemList)
+      for (let i = 0, len = $waterfallItemList.length; i < len; i++) {
+        const $waterfallItem = $waterfallItemList[i]
+        // 第一行
+        if (i < this.col) {
+          this.columnData.push($waterfallItem.offsetHeight)
+          $waterfallItem.style.left = i * (this.gap + this.colWidth) + 'px'
+        } else {
+          let minHeight = Math.min.apply(null, this.columnData)
+          let minIndex = this.columnData.indexOf(minHeight)
+
+          $waterfallItem.style.left = minIndex * (this.gap + this.colWidth) + 'px'
+          $waterfallItem.style.top = minHeight + this.gap + 'px'
+
+          this.columnData[minIndex] += minHeight
+        }
+      }
     }
   }
 }

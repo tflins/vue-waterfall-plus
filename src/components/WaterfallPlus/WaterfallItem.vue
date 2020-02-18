@@ -52,6 +52,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .waterfall-item {
+  position: absolute;
   box-shadow: 0px 2px 2px 0px rgba(14, 34, 57, 0.08);
   border-radius: 4px;
   overflow: hidden;
