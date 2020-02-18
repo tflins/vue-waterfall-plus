@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <waterfall-plus v-if="dataList.length" :col="2">
+    <waterfall-plus v-if="dataList.length" :col="3">
 
       <waterfall-item
         v-for="(v, i) in dataList"

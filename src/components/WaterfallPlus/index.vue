@@ -72,7 +72,6 @@ export default {
       const $waterfallItemList = document.querySelectorAll(
         '.waterfall-plus .waterfall-item'
       )
-      console.log($waterfallItemList)
       for (let i = 0, len = $waterfallItemList.length; i < len; i++) {
         const $waterfallItem = $waterfallItemList[i]
         // 第一行
@@ -86,7 +85,7 @@ export default {
           $waterfallItem.style.left = minIndex * (this.gap + this.colWidth) + 'px'
           $waterfallItem.style.top = minHeight + this.gap + 'px'
 
-          this.columnData[minIndex] += minHeight + this.gap
+          this.columnData[minIndex] += $waterfallItem.offsetHeight + this.gap
         }
       }
     }
