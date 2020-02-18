@@ -86,7 +86,7 @@ export default {
           $waterfallItem.style.left = minIndex * (this.gap + this.colWidth) + 'px'
           $waterfallItem.style.top = minHeight + this.gap + 'px'
 
-          this.columnData[minIndex] += minHeight
+          this.columnData[minIndex] += minHeight + this.gap
         }
       }
     }

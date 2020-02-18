@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <waterfall-plus v-if="dataList.length">
+    <waterfall-plus v-if="dataList.length" :col="2">
 
       <waterfall-item
         v-for="(v, i) in dataList"
@@ -41,7 +41,7 @@ export default {
 
   methods: {
     getDataList() {
-      axios.get('api/shibes?count=10&urls=true&httpsUrls=false').then(res => {
+      axios.get('api/shibes?count=6&urls=true&httpsUrls=false').then(res => {
         this.dataList = res.data.map(v => ({ url: v }))
       })
     }
