@@ -43,6 +43,13 @@ export default {
     }
   },
 
+  watch: {
+    urlList(newList, oldList) {
+      console.log(newList, oldList)
+      this.preLoadImg(this.urlList)
+    }
+  },
+
   mounted() {
     this.preLoadImg(this.urlList)
   },
@@ -82,7 +89,8 @@ export default {
           let minHeight = Math.min.apply(null, this.columnData)
           let minIndex = this.columnData.indexOf(minHeight)
 
-          $waterfallItem.style.left = minIndex * (this.gap + this.colWidth) + 'px'
+          $waterfallItem.style.left =
+            minIndex * (this.gap + this.colWidth) + 'px'
           $waterfallItem.style.top = minHeight + this.gap + 'px'
 
           this.columnData[minIndex] += $waterfallItem.offsetHeight + this.gap

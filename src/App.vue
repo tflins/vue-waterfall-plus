@@ -8,9 +8,11 @@
         :key="i"
         :img-url="v.url"
       >
-      <template v-slot:footer>
-        xxxxxx
-      </template>
+
+        <template v-slot:footer>
+          xxxxxx
+        </template>
+
       </waterfall-item>
 
     </waterfall-plus>
@@ -41,7 +43,7 @@ export default {
 
   methods: {
     getDataList() {
-      axios.get('api/shibes?count=6&urls=true&httpsUrls=false').then(res => {
+      axios.get('api/shibes?count=15&urls=true&httpsUrls=false').then(res => {
         this.dataList = res.data.map(v => ({ url: v }))
       })
     }
