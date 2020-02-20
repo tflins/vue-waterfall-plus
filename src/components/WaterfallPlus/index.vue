@@ -44,10 +44,7 @@ export default {
   },
 
   watch: {
-    urlList(newList, oldList) {
-      console.log(newList, oldList)
-      this.preLoadImg(this.urlList)
-    }
+
   },
 
   mounted() {

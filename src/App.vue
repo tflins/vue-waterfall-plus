@@ -6,7 +6,7 @@
       <waterfall-item
         v-for="(v, i) in dataList"
         :key="i"
-        :img-url="v.url"
+        :img-url="v.img.url"
       >
 
         <template v-slot:footer>
@@ -23,7 +23,10 @@
 <script>
 import WaterfallPlus from '@/components/WaterfallPlus'
 import WaterfallItem from '@/components/WaterfallPlus/WaterfallItem'
-import axios from 'axios'
+
+import utils from '@/utils'
+
+const LIST_LENGTH = 50
 
 export default {
   data() {
@@ -43,9 +46,13 @@ export default {
 
   methods: {
     getDataList() {
-      axios.get('api/shibes?count=15&urls=true&httpsUrls=false').then(res => {
-        this.dataList = res.data.map(v => ({ url: v }))
-      })
+      for (let i = 0, len = LIST_LENGTH; i < len; i++) {
+        this.dataList.push({
+          img: {
+            url: `/imgs/${utils.randomIntNum(1, 9)}.jpg`
+          }
+        })
+      }
     }
   }
 }
