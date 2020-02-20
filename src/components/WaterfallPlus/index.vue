@@ -104,7 +104,7 @@ export default {
             }
 
             // 设置子组件高度
-            this.waterfallItemList[index].height = $img.height * this.colWidth / $img.width
+            this.waterfallItemList[index].height = ~~($img.height * this.colWidth / $img.width)
 
             if (count === len) {
               this.renderWaterfall()
