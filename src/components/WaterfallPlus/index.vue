@@ -14,7 +14,10 @@ export default {
     return {
       // 每列高度数据
       columnData: [],
-      urlList: []
+      // 图片 url 列表
+      urlList: [],
+      // 生成渲染的数据列表
+      dataList: []
     }
   },
 
@@ -43,28 +46,31 @@ export default {
     }
   },
 
-  watch: {
-
-  },
+  watch: {},
 
   mounted() {
     this.preLoadImg(this.urlList)
   },
 
   methods: {
-    // 预加载图片获取高度
+    // 预加载图片获取宽高
     preLoadImg(list) {
       let count = 0
       let len = list.length
 
-      list.forEach(url => {
+      list.forEach((url, index) => {
         const $img = new Image()
         $img.src = url
         $img.onload = $img.onerror = e => {
           if (e.type === 'load') {
             count++
+            this.dataList[index] = {
+              url: $img.src,
+              width: $img.width,
+              height: $img.height
+            }
+
             if (count === len) {
-              console.log('加载完了')
               this.renderWaterfall()
             }
           }
