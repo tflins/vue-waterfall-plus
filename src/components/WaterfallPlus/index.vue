@@ -14,10 +14,12 @@ export default {
     return {
       // 每列高度数据
       columnData: [],
-      // 图片 url 列表
-      urlList: [],
       // 生成渲染的数据列表
-      dataList: []
+      dataList: [],
+      // 渲染索引
+      renderIndex: 0,
+      // 子组件列表
+      waterfallItemList: []
     }
   },
 
@@ -43,13 +45,44 @@ export default {
     // 父容器宽度
     waterfallWidth() {
       return this.colWidth * this.col + this.gap * (this.col - 1)
+    },
+    // 图片 url 列表
+    urlList() {
+      let ret = []
+      this.waterfallItemList.forEach((child, index) => {
+        ret.push(child.imgUrl)
+        child.index = index
+      })
+      return ret
     }
   },
 
-  watch: {},
+  watch: {
+    renderIndex(val) {
+      // 当前滚动条高度
+      let scrollTop =
+        document.documentElement.scrollTop ||
+        window.pageYOffset ||
+        document.body.scrollTop
+      // 最小列高度
+      let minHeight = Math.min.apply(null, this.columnData)
+
+      // 最小列高度 - 滚动高度 < 可视区域高的的1.5倍
+      if (minHeight - scrollTop < window.innerHeight) {
+        // 渲染
+        console.log('大于')
+      }
+      console.log(val, scrollTop, minHeight)
+    }
+  },
 
   mounted() {
     this.preLoadImg(this.urlList)
+    this.bindEvent()
+  },
+
+  beforeDestroy() {
+    this.removeEvent()
   },
 
   methods: {
@@ -69,6 +102,9 @@ export default {
               width: $img.width,
               height: $img.height
             }
+
+            // 设置子组件高度
+            this.waterfallItemList[index].height = $img.height * this.colWidth / $img.width
 
             if (count === len) {
               this.renderWaterfall()
@@ -98,8 +134,13 @@ export default {
 
           this.columnData[minIndex] += $waterfallItem.offsetHeight + this.gap
         }
+        this.renderIndex++
       }
-    }
+    },
+    // 绑定事件
+    bindEvent() {},
+    // 解绑事件
+    removeEvent() {}
   }
 }
 </script>

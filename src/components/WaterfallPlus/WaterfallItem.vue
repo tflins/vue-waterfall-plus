@@ -5,7 +5,7 @@
   >
     <div
       class="waterfall-item-top-box"
-      :style="{ width: colWidth + 'px' }"
+      :style="[{ width: colWidth + 'px' }, { height: height + 'px' }]"
     >
       <img
         v-if="!$slots.default"
@@ -31,7 +31,10 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      index: -1,
+      height: 0
+    }
   },
 
   props: {
@@ -45,7 +48,11 @@ export default {
   },
 
   beforeCreate() {
-    this.$parent.urlList.push(this.$options.propsData.imgUrl)
+    // this.$parent.urlList.push(this.$options.propsData.imgUrl)
+    this.$parent.waterfallItemList.push(this)
+  },
+
+  mounted() {
   }
 }
 </script>
