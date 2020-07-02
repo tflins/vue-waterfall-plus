@@ -21,10 +21,9 @@
 </template>
 
 <script>
+import utils from '@/utils'
 import WaterfallPlus from '@/components/WaterfallPlus'
 import WaterfallItem from '@/components/WaterfallPlus/WaterfallItem'
-
-import utils from '@/utils'
 
 const LIST_LENGTH = 50
 
